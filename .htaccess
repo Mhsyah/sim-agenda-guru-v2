@@ -1,0 +1,28 @@
+# Agenda Guru — untuk shared hosting (Apache/LiteSpeed) bila seluruh folder
+# aplikasi diunggah ke public_html atau subfolder. Semua permintaan diarahkan
+# ke folder public/, dan folder/berkas sensitif diblokir.
+# Bila Anda bisa mengatur Document Root langsung ke folder public/, itu lebih aman.
+
+Options -Indexes
+DirectoryIndex index.php
+
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+
+    # Blokir akses langsung ke kode & data aplikasi
+    RewriteRule ^(app|system|writable|vendor|tests|node_modules|resources|docs)(/|$) - [F,L,NC]
+    RewriteRule ^(\.env.*|\.git.*|composer\.(json|lock)|package(-lock)?\.json|spark|phpunit.*|preload\.php|builds|env|.*\.md)$ - [F,L,NC]
+
+    # Teruskan semua permintaan ke public/
+    RewriteCond %{REQUEST_URI} !(^|/)public/
+    RewriteRule ^(.*)$ public/$1 [L]
+</IfModule>
+
+<IfModule !mod_rewrite.c>
+    # Tanpa mod_rewrite aplikasi tidak dapat berjalan dengan aman dari folder ini.
+    Require all denied
+</IfModule>
+
+<FilesMatch "^\.">
+    Require all denied
+</FilesMatch>

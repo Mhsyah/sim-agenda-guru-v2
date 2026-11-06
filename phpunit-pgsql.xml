@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Test suite Agenda Guru pada PostgreSQL. Jalankan: vendor/bin/phpunit -c phpunit-pgsql.xml -->
+<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="vendor/phpunit/phpunit/phpunit.xsd"
+         bootstrap="vendor/codeigniter4/framework/system/Test/bootstrap.php"
+         backupGlobals="false" colors="true" failOnRisky="true" failOnWarning="true"
+         cacheDirectory="writable/.phpunit.cache">
+    <testsuites>
+        <testsuite name="App"><directory>./tests</directory></testsuite>
+    </testsuites>
+    <source><include><directory suffix=".php">./app</directory></include></source>
+    <php>
+        <env name="logger.threshold" value="0"/>
+        <server name="app.baseURL" value="http://example.com/"/>
+        <server name="CODEIGNITER_SCREAM_DEPRECATIONS" value="0"/>
+        <const name="HOMEPATH" value="./"/>
+        <const name="CONFIGPATH" value="./app/Config/"/>
+        <const name="PUBLICPATH" value="./public/"/>
+        <env name="database.tests.hostname" value="127.0.0.1"/>
+        <env name="database.tests.database" value="agenda_guru_v02_test"/>
+        <env name="database.tests.username" value="postgres"/>
+        <env name="database.tests.password" value=""/>
+        <env name="database.tests.DBDriver" value="Postgre"/>
+        <env name="database.tests.DBPrefix" value="db_"/>
+        <env name="database.tests.port" value="5432"/>
+        <env name="database.tests.charset" value="utf8"/>
+        <env name="database.tests.DBCollat" value=""/>
+    </php>
+</phpunit>
